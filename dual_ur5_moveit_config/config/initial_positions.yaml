@@ -1,0 +1,17 @@
+# Default initial positions for dual_ur5's ros2_control fake system
+
+initial_positions:
+  left_gripper_robotiq_85_left_knuckle_joint: 0
+  right_gripper_robotiq_85_left_knuckle_joint: 0
+  ur5_left_elbow_joint: 0
+  ur5_left_shoulder_lift_joint: 0
+  ur5_left_shoulder_pan_joint: 0
+  ur5_left_wrist_1_joint: 0
+  ur5_left_wrist_2_joint: 0
+  ur5_left_wrist_3_joint: 0
+  ur5_right_elbow_joint: 0
+  ur5_right_shoulder_lift_joint: 0
+  ur5_right_shoulder_pan_joint: 0
+  ur5_right_wrist_1_joint: 0
+  ur5_right_wrist_2_joint: 0
+  ur5_right_wrist_3_joint: 0

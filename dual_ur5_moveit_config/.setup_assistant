@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: dual_ur5
+    relative_path: urdf/dual_ur5.urdf
+  srdf:
+    relative_path: config/dual_ur5.srdf
+  package_settings:
+    author_name: Yi Sun
+    author_email: yi.sun@rwth-aachen.de
+    generated_timestamp: 1750367618
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

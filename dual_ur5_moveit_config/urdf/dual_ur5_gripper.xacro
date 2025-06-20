@@ -1,0 +1,27 @@
+<!-- double_ur5.urdf.xacro -->
+<robot name="dual_ur5" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- 左臂 -->
+  <xacro:include filename="$(find ur_description)/urdf/ur.urdf.xacro" />
+  <xacro:ur5_robot
+    prefix="left_"
+    joint_limits_params="$(find ur_description)/config/joint_limits.yaml"
+    kinematics_params="$(find ur_description)/config/kinematics.yaml"
+    parent_link="world"
+    name="ur5_left"
+    xyz="0 0.5 0"
+    rpy="0 0 0"/>
+
+  <!-- 右臂 -->
+  <xacro:ur5_robot
+    prefix="right_"
+    joint_limits_params="$(find ur_description)/config/joint_limits.yaml"
+    kinematics_params="$(find ur_description)/config/kinematics.yaml"
+    parent_link="world"
+    name="ur5_right"
+    xyz="0 -0.5 0"
+    rpy="0 0 0"/>
+
+</robot>
+
+  

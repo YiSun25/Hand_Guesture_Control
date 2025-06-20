@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="dual_ur5">
+
+  <xacro:include filename="$(find dual_ur5)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+
+  <!-- parameters -->
+  <xacro:property name="ur_type" value="ur5"/>
+
+  <!-- world -->
+  <link name="world"/>
+
+    
+  
+
+  
+  <!-- left arm -->
+  <xacro:ur_robot
+    name="ur5_left"
+    tf_prefix="ur5_left_"
+    parent="world"
+    joint_limits_parameters_file="$(find dual_ur5)/config/ur5/joint_limits.yaml"
+    kinematics_parameters_file="$(find dual_ur5)/config/ur5/default_kinematics.yaml"
+    physical_parameters_file="$(find dual_ur5)/config/ur5/physical_parameters.yaml"
+    visual_parameters_file="$(find dual_ur5)/config/ur5/visual_parameters.yaml"
+    safety_limits="false"
+    safety_pos_margin="0.15"
+    safety_k_position="20"
+    
+  >
+    <origin xyz="-1 0 0" rpy="0 0 0"/> <!-- left arm is loacated on left side of world-->
+  </xacro:ur_robot>
+
+  <!-- left gripper -->
+  <xacro:robotiq_85_gripper
+    parent="ur5_left_tool0"
+    prefix="left_gripper_">
+    <origin xyz="0 0 0.004" rpy="0 ${-pi/2} ${pi}"/>
+  </xacro:robotiq_85_gripper> 
+
+
+  <!-- right arm -->
+  <!-- force_abs_paths="false" -->
+  <xacro:ur_robot
+    name="ur5_right"
+    tf_prefix="ur5_right_"
+    parent="world"
+    joint_limits_parameters_file="$(find dual_ur5_gripper)/config/ur5/joint_limits.yaml"
+    kinematics_parameters_file="$(find dual_ur5_gripper)/config/ur5/default_kinematics.yaml"
+    physical_parameters_file="$(find dual_ur5_gripper)/config/ur5/physical_parameters.yaml"
+    visual_parameters_file="$(find dual_ur5_gripper)/config/ur5/visual_parameters.yaml"
+    safety_limits="false"
+    safety_pos_margin="0.15"
+    safety_k_position="20"
+    
+  >
+    <origin xyz="1 0 0" rpy="0 0 0"/> <!-- right arm is loacated on right side of world -->
+  </xacro:ur_robot> 
+  
+  <xacro:robotiq_85_gripper
+    parent="ur5_right_tool0"
+    prefix="right_gripper_">
+    <origin xyz="0 0 0.004" rpy="0 ${-pi/2} ${pi}"/>
+  </xacro:robotiq_85_gripper> 
+
+</robot>
+
+
+
+<!-- <link name="robotiq_coupler">
+    <visual>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/robotiq_85_coupler.stl" />
+      </geometry>
+      <material name="flat_black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/robotiq_85_coupler.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="2.073e-05   1.45286e-03  -1.1049e-03" rpy="0 0 0" />
+      <mass value="0.168" />
+      <inertia ixx="6.69695624e-05" ixy="5.21511788e-09" ixz="-2.74383009e-08" 
+               iyy="7.85088161e-05" iyz="5.41105193e-07" izz="1.41819717e-04"/>
+    </inertial>
+  </link>
+
+  <joint name="robotiq_coupler_joint_left" type="fixed">
+    <origin xyz="0 0 0.004" rpy="0 0 ${-pi/2.0}" />
+    <parent link="ur5_left_tool0"/>
+    <child link="robotiq_coupler"/>
+  </joint>
+
+   <joint name="robotiq_coupler_joint_right" type="fixed">
+    <origin xyz="0 0 0.004" rpy="0 0 ${-pi/2.0}" />
+    <parent link="ur5_right_tool0"/>
+    <child link="robotiq_coupler"/>
+  </joint> -->
