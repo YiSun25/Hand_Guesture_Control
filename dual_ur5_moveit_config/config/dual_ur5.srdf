@@ -25,7 +25,8 @@
         <joint name="ur5_left_wrist_3_link-ft_frame"/> -->
     </group>
     <group name="right_arm">
-        <joint name="ur5_right_base_joint"/>
+        <chain base_link="ur5_right_base_link" tip_link="ur5_right_tool0"/>
+        <!-- <joint name="ur5_right_base_joint"/>
         <joint name="ur5_right_base_link-base_fixed_joint"/>
         <joint name="ur5_right_base_link-base_link_inertia"/>
         <joint name="ur5_right_shoulder_pan_joint"/>
@@ -36,7 +37,7 @@
         <joint name="ur5_right_wrist_3_joint"/>
         <joint name="ur5_right_wrist_3-flange"/>
         <joint name="ur5_right_flange-tool0"/>
-        <joint name="ur5_right_wrist_3_link-ft_frame"/>
+        <joint name="ur5_right_wrist_3_link-ft_frame"/> -->
     </group>
     <group name="left_hand">
         <link name="left_gripper_robotiq_85_base_link"/>

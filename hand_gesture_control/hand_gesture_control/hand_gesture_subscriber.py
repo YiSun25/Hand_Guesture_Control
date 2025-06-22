@@ -61,73 +61,73 @@ class DualArmGestureController(Node):
         self.get_logger().info('Gesture-based dual-arm controller started.')
         self.loop()
 
-    def create_goal(self, pose: PoseStamped, group_name: str, link: str):
-        # req = MotionPlanRequest()
-        # req.group_name = group_name
-        # req.goal_constraints.append(Constraints())
-        # req.goal_constraints[0].position_constraints.append(PositionConstraint())
-        # req.goal_constraints[0].position_constraints[0].constraint_region.primitives.append(SolidPrimitive())
-        # req.goal_constraints[0].position_constraints[0].constraint_region.primitives[0].type = SolidPrimitive.SPHERE
-        # req.goal_constraints[0].position_constraints[0].constraint_region.primitives[0].dimensions = [0.001]
-        # req.goal_constraints[0].position_constraints[0].target_point_offset.x = 0.0
-        # req.goal_constraints[0].position_constraints[0].constraint_region.primitive_poses.append(pose.pose)
-        # req.goal_constraints[0].position_constraints[0].header = pose.header
+    # def create_goal(self, pose: PoseStamped, group_name: str, link: str):
+    #     # req = MotionPlanRequest()
+    #     # req.group_name = group_name
+    #     # req.goal_constraints.append(Constraints())
+    #     # req.goal_constraints[0].position_constraints.append(PositionConstraint())
+    #     # req.goal_constraints[0].position_constraints[0].constraint_region.primitives.append(SolidPrimitive())
+    #     # req.goal_constraints[0].position_constraints[0].constraint_region.primitives[0].type = SolidPrimitive.SPHERE
+    #     # req.goal_constraints[0].position_constraints[0].constraint_region.primitives[0].dimensions = [0.001]
+    #     # req.goal_constraints[0].position_constraints[0].target_point_offset.x = 0.0
+    #     # req.goal_constraints[0].position_constraints[0].constraint_region.primitive_poses.append(pose.pose)
+    #     # req.goal_constraints[0].position_constraints[0].header = pose.header
         
 
-        # goal = MoveGroup.Goal()
-        # goal.request = req
-        # goal.planning_options = PlanningOptions()
-        # goal.planning_options.plan_only = False
-        # goal.planning_options.look_around = False
-        # goal.planning_options.replan = True
+    #     # goal = MoveGroup.Goal()
+    #     # goal.request = req
+    #     # goal.planning_options = PlanningOptions()
+    #     # goal.planning_options.plan_only = False
+    #     # goal.planning_options.look_around = False
+    #     # goal.planning_options.replan = True
 
-        primitive = SolidPrimitive()
-        primitive.type = SolidPrimitive.SPHERE
-        primitive.dimensions = [0.1]  # 半径为 1mm 的小球
+    #     primitive = SolidPrimitive()
+    #     primitive.type = SolidPrimitive.SPHERE
+    #     primitive.dimensions = [0.1]  # 半径为 1mm 的小球
 
-        position_constraint = PositionConstraint()
-        position_constraint.header = pose.header
-        print(pose.header.frame_id)
-        position_constraint.link_name = link
-        position_constraint.constraint_region.primitives.append(primitive)
-        position_constraint.constraint_region.primitive_poses.append(pose.pose)
-        position_constraint.weight = 1.0
+    #     position_constraint = PositionConstraint()
+    #     position_constraint.header = pose.header
+    #     print(pose.header.frame_id)
+    #     position_constraint.link_name = link
+    #     position_constraint.constraint_region.primitives.append(primitive)
+    #     position_constraint.constraint_region.primitive_poses.append(pose.pose)
+    #     position_constraint.weight = 1.0
 
-        ori_constraint = OrientationConstraint()
-        ori_constraint.header = pose.header
-        ori_constraint.link_name = link
-        ori_constraint.orientation = pose.pose.orientation
-        ori_constraint.absolute_x_axis_tolerance = 0.1
-        ori_constraint.absolute_y_axis_tolerance = 0.1
-        ori_constraint.absolute_z_axis_tolerance = 0.1
-        ori_constraint.weight = 1.0
+    #     ori_constraint = OrientationConstraint()
+    #     ori_constraint.header = pose.header
+    #     ori_constraint.link_name = link
+    #     ori_constraint.orientation = pose.pose.orientation
+    #     ori_constraint.absolute_x_axis_tolerance = 0.1
+    #     ori_constraint.absolute_y_axis_tolerance = 0.1
+    #     ori_constraint.absolute_z_axis_tolerance = 0.1
+    #     ori_constraint.weight = 1.0
 
 
-        constraints = Constraints()
-        constraints.position_constraints.append(position_constraint)
-        constraints.orientation_constraints.append(ori_constraint)
-        req = MotionPlanRequest()
-        req.group_name = group_name
-        req.goal_constraints.append(constraints)
-        req.start_state.joint_state.position = [0.0, -1.5, 0., -1.5, 0.0, 1.5]
+    #     constraints = Constraints()
+    #     constraints.position_constraints.append(position_constraint)
+    #     constraints.orientation_constraints.append(ori_constraint)
+    #     req = MotionPlanRequest()
+    #     req.group_name = group_name
+    #     req.goal_constraints.append(constraints)
+    #     req.start_state.joint_state.position = [0.0, -1.5, 0., -1.5, 0.0, 1.5]
 
-        goal = MoveGroup.Goal()
-        goal.request = req
-        goal.planning_options = PlanningOptions()
-        goal.planning_options.plan_only = False
-        goal.planning_options.look_around = False
-        goal.planning_options.replan = True
+    #     goal = MoveGroup.Goal()
+    #     goal.request = req
+    #     goal.planning_options = PlanningOptions()
+    #     goal.planning_options.plan_only = False
+    #     goal.planning_options.look_around = False
+    #     goal.planning_options.replan = True
         
-        return goal
+    #     return goal
 
     def pose2d_to_pose_stamped(self, msg: Pose2D, frame: str) -> PoseStamped:
         pose = PoseStamped()
         pose.header.frame_id = frame
         # pose.header.frame_id = "world"       
         pose.header.stamp = self.get_clock().now().to_msg()
-        pose.pose.position.x = 1.0
+        pose.pose.position.x = -1 + msg.x*5
         pose.pose.position.y = 0.
-        pose.pose.position.z = 0.5
+        pose.pose.position.z = msg.y*5
 
         # Yaw only, convert to quaternion
         yaw = msg.theta
@@ -142,8 +142,6 @@ class DualArmGestureController(Node):
 
     def left_pose_cb(self, msg: Pose2D):
         pose = self.pose2d_to_pose_stamped(msg, 'ur5_left_base_link')
-        goal = self.create_goal(pose, 'left_arm', 'ur5_left_tool0')
-        self.left_goal.append(goal)
         self.left_pose.append(pose)
         
         # self.left_arm_client.wait_for_server()
@@ -151,7 +149,6 @@ class DualArmGestureController(Node):
 
     def right_pose_cb(self, msg: Pose2D):
         pose = self.pose2d_to_pose_stamped(msg, 'ur5_right_base_link')
-        goal = self.create_goal(pose, 'right_arm', 'ur5_right_tool0')
         # self.right_arm_client.wait_for_server()
         # self.right_arm_client.send_goal_async(goal)
 
@@ -172,42 +169,41 @@ class DualArmGestureController(Node):
     def moveit2_send(self):
         if not len(self.left_pose) == 0:
             pose = self.left_pose[0]
-            self.left_pose.pop(0)
+            print('pose: \n',pose)
+            # self.left_pose.pop(0)
+            self.left_pose.clear()
             # self.moveit.set_pose_goal(pose=pose.pose)
             MoveIt2.compute_ik
             print('====================')
-            self.moveit.move_to_pose(pose, target_link='ur5_left_base_link', cartesian=True, cartesian_max_step=0.3)
+            self.moveit.move_to_pose(pose, target_link='ur5_left_base_link', cartesian=True, cartesian_max_step=0.02)
         
-    def send_pose(self):
-        
-        goal = []
-        if not len(self.left_goal) == 0:
-            goal = self.left_goal[0]
-            self.left_goal.pop(0)
-            self.left_arm_client.wait_for_server()
-            send_goal_future = self.left_arm_client.send_goal_async(goal)
+    # def send_pose(self):
 
-            rclpy.spin_until_future_complete(self, send_goal_future)
-            goal_handle = send_goal_future.result()
+    #     goal = []
+    #     if not len(self.left_goal) == 0:
+    #         goal = self.left_goal[0]
+    #         self.left_goal.pop(0)
+    #         self.left_arm_client.wait_for_server()
+    #         send_goal_future = self.left_arm_client.send_goal_async(goal)
 
-            if not goal_handle.accepted:
-                print("Goal was rejected by the server.")
-                exit()
+    #         rclpy.spin_until_future_complete(self, send_goal_future)
+    #         goal_handle = send_goal_future.result()
 
-            # 获取规划和执行结果
-            result_future = goal_handle.get_result_async()
-            rclpy.spin_until_future_complete(self, result_future)
-            result = result_future.result()
+    #         if not goal_handle.accepted:
+    #             print("Goal was rejected by the server.")
+    #             exit()
 
-            # 输出执行结果
-            print("Planning result error code:", result.result.error_code.val)
+    #         result_future = goal_handle.get_result_async()
+    #         rclpy.spin_until_future_complete(self, result_future)
+    #         result = result_future.result()
+
+    #         print("Planning result error code:", result.result.error_code.val)
     
     def loop(self):
         while rclpy.ok() :
             rclpy.spin_once(self)
-            # self.send_pose()
             self.moveit2_send()
-            time.sleep(1.0)
+            time.sleep(0.2)
             
 
 
