@@ -10,7 +10,8 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_arm">
-        <joint name="ur5_left_base_joint"/>
+        <chain base_link="ur5_left_base_link" tip_link="ur5_left_tool0"/>
+        <!-- <joint name="ur5_left_base_joint"/>
         <joint name="ur5_left_base_link-base_fixed_joint"/>
         <joint name="ur5_left_base_link-base_link_inertia"/>
         <joint name="ur5_left_shoulder_pan_joint"/>
@@ -21,7 +22,7 @@
         <joint name="ur5_left_wrist_3_joint"/>
         <joint name="ur5_left_wrist_3-flange"/>
         <joint name="ur5_left_flange-tool0"/>
-        <joint name="ur5_left_wrist_3_link-ft_frame"/>
+        <joint name="ur5_left_wrist_3_link-ft_frame"/> -->
     </group>
     <group name="right_arm">
         <joint name="ur5_right_base_joint"/>
@@ -83,8 +84,8 @@
         <joint name="left_gripper_robotiq_85_left_knuckle_joint" value="0"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="left_hand" parent_link="ur5_left_tool0" group="left_hand"/>
-    <end_effector name="right_hand" parent_link="ur5_right_tool0" group="right_hand"/>
+    <end_effector name="left_hand" parent_link="ur5_left_tool0" group="left_arm"/>
+    <end_effector name="right_hand" parent_link="ur5_right_tool0" group="right_arm"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="left_gripper_robotiq_85_base_link" link2="left_gripper_robotiq_85_left_finger_link" reason="Never"/>
     <disable_collisions link1="left_gripper_robotiq_85_base_link" link2="left_gripper_robotiq_85_left_finger_tip_link" reason="Never"/>

@@ -62,7 +62,8 @@
   <link name="world"/>
   <ros2_control name="ur5_left" type="system">
     <hardware>
-      <plugin>ur_robot_driver/URPositionHardwareInterface</plugin>
+      <!-- <plugin>ur_robot_driver/URPositionHardwareInterface</plugin> -->
+      <plugin>fake_components/GenericSystem</plugin>
       <param name="robot_ip">0.0.0.0</param>
       <param name="script_filename">to_be_filled_by_ur_robot_driver</param>
       <param name="output_recipe_filename">to_be_filled_by_ur_robot_driver</param>
@@ -868,7 +869,8 @@
   </gazebo>
   <ros2_control name="ur5_right" type="system">
     <hardware>
-      <plugin>ur_robot_driver/URPositionHardwareInterface</plugin>
+      <!-- <plugin>ur_robot_driver/URPositionHardwareInterface</plugin> -->
+      <plugin>fake_components/GenericSystem</plugin>
       <param name="robot_ip">0.0.0.0</param>
       <param name="script_filename">to_be_filled_by_ur_robot_driver</param>
       <param name="output_recipe_filename">to_be_filled_by_ur_robot_driver</param>
